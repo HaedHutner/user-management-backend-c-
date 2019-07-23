@@ -5,10 +5,11 @@ namespace UserManagement.Api
 {
     public interface IUserService
     {
-        void CreateUser(string email, string firstName, string lastName, string rawPassword, DateTime dateOfBirth);
+        User CreateUser(string email, string firstName, string lastName, string rawPassword, DateTime dateOfBirth);
 
-        void UpdateUserByEmail(string email, string firstName, string lastName, string rawPassword, DateTime dateOfBirth);
+        void UpdateUserById(long id, string email, string firstName, string lastName, string rawPassword, DateTime dateOfBirth);
 
-        void DeleteUserByEmail(string email);
+        void DeleteUserById(long id);
+        User GetUser(long id);
     }
 }

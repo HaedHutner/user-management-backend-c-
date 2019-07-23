@@ -1,23 +1,48 @@
 ﻿using System;
 using UserManagement.Api;
+using UserManagement.Model;
+using UserManagement.Repository;
 
 namespace UserManagement.Service
 {
     public class UserService : IUserService
     {
-        public void CreateUser(string email, string firstName, string lastName, string rawPassword, DateTime dateOfBirth)
+        private readonly UserRepository _userRepository;
+
+        private readonly PasswordService _passwordService;
+        public UserService(UserRepository userRepository, PasswordService passwordService)
+        {
+            _userRepository = userRepository;
+            _passwordService = passwordService;
+        }
+
+        public User CreateUser(string email, string firstName, string lastName, string rawPassword, DateTime dateOfBirth)
+        {
+            var user = new User
+            {
+                Email = email,
+                FirstName = firstName,
+                LastName = lastName,
+                PasswordHash = _passwordService.HashPassword(rawPassword),
+                DateOfBirth = dateOfBirth
+            };
+
+            return user;
+        }
+
+        public void UpdateUserById(long id, string valueEmail, string firstName, string lastName, string rawPassword, DateTime dateOfBirth)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateUserByEmail(string email, string firstName, string lastName, string rawPassword, DateTime dateOfBirth)
+        public void DeleteUserById(long id)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteUserByEmail(string email)
+        public User GetUser(long id)
         {
-            throw new NotImplementedException();
+            return _userRepository.FindUserById(id);
         }
     }
 }

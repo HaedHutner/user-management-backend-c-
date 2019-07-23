@@ -1,29 +1,30 @@
 ﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using UserManagement.Api;
+using UserManagement.Context;
 using UserManagement.Model;
 
 namespace UserManagement.Repository
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : AbstractRepository<User>
     {
-        public User Save(User entity)
+        public UserRepository(ApplicationContext context) : base(context, context.Users)
         {
-            throw new System.NotImplementedException();
         }
 
-        public User Update(User entity)
+        public User FindUserByEmailLINQ(string email)
         {
-            throw new System.NotImplementedException();
+            return Query().First(user => email.Equals(user.Email));
         }
 
-        public void Delete(User entity)
+        public User FindUserByEmailSQL(string email)
         {
-            throw new System.NotImplementedException();
+            return Query().FromSql($"SELECT * FROM User u WHERE u.email = {email}").First();
         }
 
-        public IQueryable<User> Query()
+        public User FindUserById(long id)
         {
-            throw new System.NotImplementedException();
+            return Query().First(user => id.Equals(user.Id));
         }
     }
 }

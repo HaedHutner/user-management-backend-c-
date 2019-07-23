@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace UserManagement.Model
 { 
@@ -15,5 +17,7 @@ namespace UserManagement.Model
         public string PasswordHash { set; get; }
 
         public DateTime DateOfBirth { set; get; }
+
+        public List<Address> Addresses { set; get; }
     }
 }
